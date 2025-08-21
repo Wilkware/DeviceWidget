@@ -1,0 +1,2 @@
+# DeviceWidget
+IP-Symcon Modul
