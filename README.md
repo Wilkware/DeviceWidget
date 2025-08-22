@@ -1,7 +1,7 @@
 # 🎚️ Geräte-Widget (Device Widget)
 
 [![Version](https://img.shields.io/badge/Symcon-PHP--Modul-red.svg?style=flat-square)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
-[![Product](https://img.shields.io/badge/Symcon%20Version-7.2-blue.svg?style=flat-square)](https://www.symcon.de/produkt/)
+[![Product](https://img.shields.io/badge/Symcon%20Version-8.1-blue.svg?style=flat-square)](https://www.symcon.de/produkt/)
 [![Version](https://img.shields.io/badge/Modul%20Version-1.0.20250729-orange.svg?style=flat-square)](https://github.com/Wilkware/DeviceWidget)
 [![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg?style=flat-square)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 [![Actions](https://img.shields.io/github/actions/workflow/status/wilkware/DeviceWidget/ci.yml?branch=main&label=CI&style=flat-square)](https://github.com/Wilkware/DeviceWidget/actions)
@@ -68,7 +68,6 @@ Type                                | Variablentyp (bool, int, float oder string
 Wert (AN)                           | Vergleichswert für Zustand AN, AUF oder AKTIV 
 Wert (AUS)                          | Vergleichswert für Zustand AUS, ZU, INAKTIV
 
-
 > ℹ️ Informationen  ...
 
 Status (1.Zeilenbereich)            | Beschreibung
@@ -101,6 +100,11 @@ Variable                            | Variablenwert
 Suffix                              | Text nach Variablenwert
 Schriftgröße                        | zu verwendende Schriftgröße in Pixel
 
+<style>
+table { width: 100%; }
+td:nth-child(1) { width: 150px; }
+td:nth-child(2) { width: 300px; }
+</style>
 
 ### 5. Statusvariablen und Profile
 
