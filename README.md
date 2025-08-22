@@ -45,7 +45,7 @@ _Einstellungsbereich:_
 
 > ⬛ Kachel ...
 
-Name                                | Beschreibung
+Name________________________________| Beschreibung
 ------------------------------------|--------------------------------------------
 Hintergrundfarbe                    | Transparent oder beliebiege Farbauswahl
 Farbtransparenz                     | Durchsichtigkeit der gewählten Farbe von 0 bis 100%
@@ -54,7 +54,7 @@ Aufteilungsverhältnis               | Aufteilung Bild zu Informationen (von 20/
 
 > 🖼️ Bild ...
 
-Name                                | Beschreibung
+Name________________________________| Beschreibung
 ------------------------------------|--------------------------------------------
 Statusbild (AN)                     | Angezeigtes Bild im eingeschaltetem oder aktiven Status
 Statusbild (AUS)                    | Angezeigtes Bild im ausgeschaltetem oder inaktiven Status
@@ -99,12 +99,6 @@ Präfix                              | Text vor Variablenwert
 Variable                            | Variablenwert
 Suffix                              | Text nach Variablenwert
 Schriftgröße                        | zu verwendende Schriftgröße in Pixel
-
-<style>
-table { width: 100%; }
-td:nth-child(1) { width: 150px; }
-td:nth-child(2) { width: 300px; }
-</style>
 
 ### 5. Statusvariablen und Profile
 
