@@ -50,7 +50,6 @@ Name                                | Beschreibung
 Hintergrundfarbe                    | Transparent oder beliebiege Farbauswahl
 Farbtransparenz                     | Durchsichtigkeit der gewählten Farbe von 0 bis 100%
 Aufteilungsverhältnis               | Aufteilung Bild zu Informationen (von 20/80 bis 50/50)
-<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMB/atR0qUAAAAASUVORK5CYII=" width="250" height="1"> |
 
 
 > 🖼️ Bild ...
@@ -59,7 +58,6 @@ Name| Beschreibung
 ------------------------------------|--------------------------------------------
 Statusbild (AN)                     | Angezeigtes Bild im eingeschaltetem oder aktiven Status
 Statusbild (AUS)                    | Angezeigtes Bild im ausgeschaltetem oder inaktiven Status
-<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMB/atR0qUAAAAASUVORK5CYII=" width="250" height="1"> |
 
 > 🎚️ Schalter ...
 
@@ -69,7 +67,6 @@ Variable                            | Statusvariable (An/Aus, Auf/Zu usw.)
 Type                                | Variablentyp (bool, int, float oder string)
 Wert (AN)                           | Vergleichswert für Zustand AN, AUF oder AKTIV 
 Wert (AUS)                          | Vergleichswert für Zustand AUS, ZU, INAKTIV
-<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMB/atR0qUAAAAASUVORK5CYII=" width="250" height="1"> |
 
 > ℹ️ Informationen  ...
 
@@ -79,14 +76,12 @@ Beschriftung                        | Überschrift/Label für Variablenwert
 Variable                            | Variablenwert selbst
 Schriftgröße                        | zu verwendende Schriftgröße in Pixel
 Statsuabhängige Darstellung         | Tabelle mit den ausgelesen möglichen Variablenwerten (Profile) und entsprechende Zurodnungen
-<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMB/atR0qUAAAAASUVORK5CYII=" width="250" height="1"> |
 
 Aktion (2.Zeilenbereich)            | Beschreibung
 ------------------------------------|--------------------------------------------
 Beschriftung                        | Überschrift/Label für Variablenwert
 Variable                            | Variablenwert selbst
 Schriftgröße                        | zu verwendende Schriftgröße in Pixel
-<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMB/atR0qUAAAAASUVORK5CYII=" width="250" height="1"> |
 
 Fortschritt (3.Zeilenbereich)       | Beschreibung
 ------------------------------------|--------------------------------------------
@@ -96,7 +91,6 @@ Schriftgröße                        | zu verwendende Schriftgröße in Pixel
 Restlaufzeit                        | Möglichkeit zur Angabe einer Variablen mit Reslaufzeitinformationen
 Farbe(START)                        | Farbwert für Balkendarstellung (Start-Gradient)
 Farbe(STOP )                        | Farbwert für Balkendarstellung (End-Gradient)
-<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMB/atR0qUAAAAASUVORK5CYII=" width="250" height="1"> |
 
 Zusätzliche Werte (4.Zeilenbereich) | Beschreibung (1. links, 2. mittig, 3. rechts)
 ------------------------------------|------------------------------------------------
@@ -105,7 +99,6 @@ Präfix                              | Text vor Variablenwert
 Variable                            | Variablenwert
 Suffix                              | Text nach Variablenwert
 Schriftgröße                        | zu verwendende Schriftgröße in Pixel
-<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMB/atR0qUAAAAASUVORK5CYII=" width="250" height="1"> |
 
 ### 5. Statusvariablen und Profile
 
