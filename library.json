@@ -1,0 +1,12 @@
+{
+    "id": "{3C99029F-2750-F5AE-B5BE-A7613BCEE311}",
+    "name": "Device Widgets",
+    "author": "Wilkware (@Pitti)",
+    "url": "https://wilkware.de",
+    "compatibility": {
+        "version": "8.1"
+    },
+    "version": "1.0",
+    "build": 20250729,
+    "date": 1753790400
+}

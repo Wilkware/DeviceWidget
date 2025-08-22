@@ -1,0 +1,12 @@
+{
+    "id": "{EBA5842F-85FE-571C-A17C-7096ED0DEDA9}",
+    "name": "Device Widget",
+    "url": "https://wilkware.de/ip-symcon-module/",
+    "type": 3,
+    "vendor": "",
+    "aliases": [],
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "WWXDW"
+}

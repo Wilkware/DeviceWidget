@@ -1,0 +1,41 @@
+{
+    "translations": {
+        "de": {
+            "Device Widget": "Geräte-Widget",
+            "Module for displaying device status in the Tile Visualization. Ideal for clear and concise status overviews on dashboards.": "Modul zur Anzeige des Gerätestatus in der Tile Visualisierung. Ideal zur übersichtlichen Darstellung auf Dashboards.",
+            "⬛ Tile ...": "⬛ Kachel ...",
+            "Background color:": "Hintergrundfarbe:",
+            "Color transparency:": "Farbtransparenz:",
+            "Split ratio:": "Aufteilungsverhältnis:",
+            "🖼️ Image ...": "🖼️ Bild ...",
+            "Status image (ON):": "Statusbild (AN):",
+            "Status image (OFF):": "Statusbild (AUS):",
+            "🎚️ Switch ...": "🎚️ Schalter ...",
+            "Value (ON):": "Wert (AN):",
+            "Value (OFF):": "Wert (AUS):",
+            "Type:": "Typ:",
+            "ℹ️ Information ...": "ℹ️ Informationen ...",
+            "Label:": "Beschriftung:",
+            "Font size:": "Schriftgröße:",
+            "Status-Based Image & Text Styling:": "Statusabhängige Darstellung von Bild & Textfarbe:",
+            "Status": "Status",
+            "Color": "Farbe",
+            "Image": "Bild",
+            "Value": "Wert",
+            "Action:": "Aktion:",
+            "Progress bar:": "Fortschrittsbalken:",
+            "Remaining term:": "Restlaufzeit:",
+            "Color (START):": "Farbe (START):",
+            "Color (STOP):": "Farbe (STOP):",
+            "Additional values:": "Zusätzliche Werte:",
+            "On": "An",
+            "Off": "Aus",
+            "Progress bar": "Fortschrittsbalken",
+            "Prefix:": "Präfix:",
+            "Suffix:": "Suffix:",
+            "Development and debug information ...": "Entwicklungs- und Debuginformationen ...",
+            "🎗️ Source code, donation and licence ...": "🎗️ Quellcode, Spende und Lizenz ...",
+            "The software is free of charge for non-commercial use, I would appreciate a donation if you like the module.": "Die Software ist für die nicht kommerzielle Nutzung kostenlos, über eine Spende bei Gefallen des Moduls würde ich mich sehr freuen."
+        }
+    }
+}
