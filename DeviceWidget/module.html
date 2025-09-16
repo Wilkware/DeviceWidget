@@ -436,9 +436,10 @@
                             const min = parseFloat(getComputedStyle(root).getPropertyValue('--progressmin'));
                             const max = parseFloat(getComputedStyle(root).getPropertyValue('--progressmax'));
                             const val = parseFloat(decodedData[parameter]);
-                            //console.log('Min:', min, 'Max:', max, 'Val:', val)
+                            console.log('Min:', min, 'Max:', max, 'Val:', val)
                             const percentage = getPercentage(val, min, max);
                             //document.querySelector('.progress').style.width = percentage + '%';
+                            console.log('Percentage:', percentage);
                             root.style.setProperty('--progressvalue', percentage + '%');
                         }
                         break;

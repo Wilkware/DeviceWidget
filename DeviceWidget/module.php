@@ -461,19 +461,39 @@ class DeviceWidget extends IPSModuleStrict
     {
         $vid = $this->ReadPropertyInteger('SwitchVariable');
         if (!IPS_VariableExists($vid)) {
+            $this->LogDebug(__FUNCTION__, 'SwitchVariable does not exist!');
             return;
         }
         $type = $this->ReadPropertyInteger('SwitchType');
         $on = $this->ReadPropertyString('SwitchOn');
         $off = $this->ReadPropertyString('SwitchOff');
-        if ($type == 0) {
-            RequestAction($vid, $value ? filter_var($on, FILTER_VALIDATE_BOOLEAN) : filter_var($off, FILTER_VALIDATE_BOOLEAN));
-        } elseif ($type == 1) {
-            RequestAction($vid, $value ? intval($on) : intval($off));
-        } elseif ($type == 2) {
-            RequestAction($vid, $value ? floatval($on) : floatval($off));
+
+        // central convert type
+        switch ($type) {
+            case 0: // Boolean
+                $switch = $value ? filter_var($on, FILTER_VALIDATE_BOOLEAN) : filter_var($off, FILTER_VALIDATE_BOOLEAN);
+                break;
+
+            case 1: // Integer
+                $switch = $value ? intval($on) : intval($off);
+                break;
+
+            case 2: // Float
+                $switch = $value ? floatval($on) : floatval($off);
+                break;
+
+            default: // String
+                $switch = $value ? $on : $off;
+                break;
+        }
+
+        // Action or fallback to SetValue
+        if (HasAction($vid)) {
+            RequestAction($vid, $switch);
+            $this->LogDebug(__FUNCTION__, "RequestAction({$vid}, {$switch})");
         } else {
-            RequestAction($vid, $value ? $on : $off);
+            SetValue($vid, $switch);
+            $this->LogDebug(__FUNCTION__, "SetValue({$vid}, {$switch})");
         }
     }
     /**
@@ -592,7 +612,7 @@ class DeviceWidget extends IPSModuleStrict
     {
         $default = ['min' => 0, 'max' => 100];
 
-        // Helper zum Extrahieren von Min/Max aus decoded JSON
+        // Helper for extracting min/max from decoded JSON
         $extract = function ($data)
         {
             if (is_string($data)) {
@@ -607,7 +627,7 @@ class DeviceWidget extends IPSModuleStrict
             return null;
         };
 
-        // Hilfsfunktion: Hole Präsentation und extrahiere Min/Max
+        // Help function: Get presentation and extract min/max
         $presentation = function ($guid) use ($extract)
         {
             if ($guid && @IPS_PresentationExists($guid)) {
@@ -626,11 +646,14 @@ class DeviceWidget extends IPSModuleStrict
             return $default;
         }
 
-        // Fall 1: Variablenprofil
+        // Case 1: Variable profile
         $custom = $variable['VariableCustomProfile'] ?: $variable['VariableProfile'];
         if ($custom && IPS_VariableProfileExists($custom)) {
             $profile = IPS_GetVariableProfile($custom);
             if (isset($profile['MinValue'], $profile['MaxValue'])) {
+                if ($profile['MinValue'] == $profile['MaxValue']) {
+                    return $default;
+                }
                 return [
                     'min' => (float) $profile['MinValue'],
                     'max' => (float) $profile['MaxValue']
@@ -638,7 +661,7 @@ class DeviceWidget extends IPSModuleStrict
             }
         }
 
-        // Fall 2–5: CustomPresentation
+        // Case 2: CustomPresentation
         $custom = $variable['VariableCustomPresentation'] ?? [];
         if (!empty($custom)) {
             if (isset($custom['MIN'], $custom['MAX']) && is_numeric($custom['MIN']) && is_numeric($custom['MAX'])) {
@@ -654,13 +677,13 @@ class DeviceWidget extends IPSModuleStrict
             }
         }
 
-        // Fall 6: ObjectVisualization
+        // Case 3: ObjectVisualization
         if (IPS_ObjectExists($variable)) {
             $object = IPS_GetObject($variable);
             if (!empty($object['ObjectVisualization'])) {
                 $visu = json_decode($object['ObjectVisualization'], true);
                 if (is_array($visu)) {
-                    // mögliche Feldnamen
+                    // possible field names
                     $minFields = ['MinValue', 'MinimalerWert', 'Minimum', 'Min', 'minValue', 'min'];
                     $maxFields = ['MaxValue', 'MaximalerWert', 'Maximum', 'Max', 'maxValue', 'max'];
 

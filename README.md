@@ -2,7 +2,7 @@
 
 [![Version](https://img.shields.io/badge/Symcon-PHP--Modul-red.svg?style=flat-square)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
 [![Product](https://img.shields.io/badge/Symcon%20Version-8.1-blue.svg?style=flat-square)](https://www.symcon.de/produkt/)
-[![Version](https://img.shields.io/badge/Modul%20Version-1.0.20250729-orange.svg?style=flat-square)](https://github.com/Wilkware/DeviceWidget)
+[![Version](https://img.shields.io/badge/Modul%20Version-1.1.20250916-orange.svg?style=flat-square)](https://github.com/Wilkware/DeviceWidget)
 [![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg?style=flat-square)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 [![Actions](https://img.shields.io/github/actions/workflow/status/wilkware/DeviceWidget/ci.yml?branch=main&label=CI&style=flat-square)](https://github.com/Wilkware/DeviceWidget/actions)
 
@@ -114,6 +114,12 @@ Die Kachel zeigt rechts im gewählten Seitenverhältnis das statusabhängige Bil
 Das Modul stellt keine direkten Funktionsaufrufe zur Verfügung.  
 
 ### 8. Versionshistorie
+
+v1.1.20250916
+
+* _NEU_: Projektumstrukturierung hin zu einer globalen CI/CD-Pipeline
+* _FIX_: Fehler bei gleichem Wert für Min/Max für Fortschritsbalken behoben
+* _FIX_: Dokumentation überarbeitet
 
 v1.0.20250729
 
