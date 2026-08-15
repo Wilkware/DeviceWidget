@@ -1,23 +1,33 @@
 <?php
 
 declare(strict_types=1);
+/** Generell funktions */
+require_once __DIR__ . '/../libs/_traits.php';
 
-require_once __DIR__ . '/../libs/_traits.php';  // Generell funktions
+/** Namespaced traits */
+use Wilkware\DeviceWidget\DebugHelper;
+use Wilkware\DeviceWidget\FormatHelper;
 
-// CLASS DeviceWidget
+/**
+ *  CLASS DeviceWidget
+ */
 class DeviceWidget extends IPSModuleStrict
 {
+    // -------------------------------------------------------------------------
+    // Traits
+    // -------------------------------------------------------------------------
+
     use DebugHelper;
     use FormatHelper;
 
-    /**
-     * @var int Min IPS Object ID
-     */
+    // -------------------------------------------------------------------------
+    // Constants
+    // -------------------------------------------------------------------------
+
+    /** @var int Min IPS Object ID */
     private const IPS_MIN_ID = 10000;
 
-    /**
-     * @var array<string,string[]> Property name to result mapping
-     */
+    /** @var array<string,string[]> Property name to result mapping */
     private const TWDW_VARS2RES = [
         'SwitchVariable'    => ['switchstate'],
         'StatusVariable'    => ['statetext', 'statevalue'],
@@ -28,6 +38,10 @@ class DeviceWidget extends IPSModuleStrict
         'AddVariableSecond' => ['info2text'],
         'AddVariableThird'  => ['info3text'],
     ];
+
+    // -------------------------------------------------------------------------
+    // Methods
+    // -------------------------------------------------------------------------
 
     /**
      * In contrast to Construct, this function is called only once when creating the instance and starting IP-Symcon.
@@ -44,23 +58,28 @@ class DeviceWidget extends IPSModuleStrict
         $this->RegisterPropertyInteger('TileColor', -1);
         $this->RegisterPropertyInteger('TileTransparency', 100);
         $this->RegisterPropertyInteger('TileRatio', 40);
+
         // Image
         $this->RegisterPropertyInteger('StatusImageOn', 1);
         $this->RegisterPropertyInteger('StatusImageOff', 1);
+
         // Switch
         $this->RegisterPropertyInteger('SwitchVariable', 1);
         $this->RegisterPropertyInteger('SwitchType', 0);
         $this->RegisterPropertyString('SwitchOn', 'true');
         $this->RegisterPropertyString('SwitchOff', 'false');
+
         // Info:Status
         $this->RegisterPropertyString('StatusLabel', 'STATUS');
         $this->RegisterPropertyInteger('StatusVariable', 1);
         $this->RegisterPropertyInteger('StatusFont', 14);
         $this->RegisterPropertyString('StatusProfile', '[]');
+
         // Info:Action
         $this->RegisterPropertyString('ActionLabel', 'AKTION');
         $this->RegisterPropertyInteger('ActionVariable', 1);
         $this->RegisterPropertyInteger('ActionFont', 14);
+
         // Info:Progress bar
         $this->RegisterPropertyString('ProgressLabel', '');
         $this->RegisterPropertyInteger('ProgressVariable', 1);
@@ -68,6 +87,7 @@ class DeviceWidget extends IPSModuleStrict
         $this->RegisterPropertyInteger('ProgressTerm', 1);
         $this->RegisterPropertyInteger('ProgressStart', $this->GetColorUnformatted('#FFA405'));
         $this->RegisterPropertyInteger('ProgressStop', $this->GetColorUnformatted('#F9722B'));
+
         // Info:Additional
         $this->RegisterPropertyString('AddSymbolFirst', '');
         $this->RegisterPropertyString('AddPrefixFirst', '');
@@ -84,6 +104,7 @@ class DeviceWidget extends IPSModuleStrict
         $this->RegisterPropertyInteger('AddVariableThird', 1);
         $this->RegisterPropertyString('AddSuffixThird', '');
         $this->RegisterPropertyInteger('AddFontThird', 12);
+        
         // Set visualization type to 1, as we want to offer HTML
         $this->SetVisualizationType(1);
     }

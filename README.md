@@ -9,6 +9,8 @@
 Dieses Modul dient der Anzeige von Statusinformationen von Geräten als Kachel in der Tile Visualisierung.  
 Ideal zur übersichtlichen Darstellung auf Dashboards.
 
+![Module-Visu](imgs/device-widget.png)
+
 ## Inhaltverzeichnis
 
 1. [Funktionsumfang](#user-content-1-funktionsumfang)
