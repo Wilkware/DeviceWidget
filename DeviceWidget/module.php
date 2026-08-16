@@ -104,7 +104,7 @@ class DeviceWidget extends IPSModuleStrict
         $this->RegisterPropertyInteger('AddVariableThird', 1);
         $this->RegisterPropertyString('AddSuffixThird', '');
         $this->RegisterPropertyInteger('AddFontThird', 12);
-        
+
         // Set visualization type to 1, as we want to offer HTML
         $this->SetVisualizationType(1);
     }
