@@ -34,7 +34,7 @@
                     "items": [
                         {
                             "type": "SelectColor",
-                            "allowTransparent": "true",
+                            "allowTransparent": true,
                             "name": "TileColor",
                             "caption": "Background color:",
                             "width": "300px"
@@ -97,6 +97,40 @@
                             "width": "450px"
                         }
                     ]
+                }
+            ]
+        },
+        {
+            "type": "ExpansionPanel",
+            "caption": "📴 Availability ...",
+            "items": [
+                {
+                    "type": "RowLayout",
+                    "items": [
+                        {
+                            "type": "SelectVariable",
+                            "name": "OfflineVariable",
+                            "caption": "Variable:",
+                            "width": "300px"
+                        },
+                        {
+                            "type": "ValidationTextBox",
+                            "name": "OnlineValue",
+                            "caption": "Online if value is:",
+                            "width": "300px"
+                        },
+                        {
+                            "type": "SelectColor",
+                            "name": "OfflineColor",
+                            "caption": "Badge color:",
+                            "allowTransparent": false,
+                            "width": "300px"
+                        }
+                    ]
+                },
+                {
+                    "type": "Label",
+                    "caption": "If the device is offline, an 'OFFLINE' badge is shown in the upper right corner (a configured switch is hidden meanwhile)."
                 }
             ]
         },
@@ -349,28 +383,28 @@
                     "type": "RowLayout",
                     "items": [
                         {
-                            "type": "ValidationTextBox",
+                            "type": "SelectIcon",
                             "name": "AddSymbolFirst",
                             "caption": "Symbol:",
-                            "width": "75px"
+                            "width": "242px"
                         },
                         {
                             "type": "ValidationTextBox",
                             "name": "AddPrefixFirst",
                             "caption": "Prefix:",
-                            "width": "150px"
+                            "width": "125px"
                         },
                         {
                             "type": "SelectVariable",
                             "name": "AddVariableFirst",
                             "caption": "Variable:",
-                            "width": "350px"
+                            "width": "263px"
                         },
                         {
                             "type": "ValidationTextBox",
                             "name": "AddSuffixFirst",
                             "caption": "Suffix:",
-                            "width": "150px"
+                            "width": "125px"
                         },
                         {
                             "type": "NumberSpinner",
@@ -380,7 +414,7 @@
                             "minimum": 10,
                             "maximum": 20,
                             "suffix": "px",
-                            "width": "150px"
+                            "width": "130px"
                         }
                     ]
                 },
@@ -388,28 +422,28 @@
                     "type": "RowLayout",
                     "items": [
                         {
-                            "type": "ValidationTextBox",
+                            "type": "SelectIcon",
                             "name": "AddSymbolSecond",
                             "caption": "Symbol:",
-                            "width": "75px"
+                            "width": "242px"
                         },
                         {
                             "type": "ValidationTextBox",
                             "name": "AddPrefixSecond",
                             "caption": "Prefix:",
-                            "width": "150px"
+                            "width": "125px"
                         },
                         {
                             "type": "SelectVariable",
                             "name": "AddVariableSecond",
                             "caption": "Variable:",
-                            "width": "350px"
+                            "width": "263px"
                         },
                         {
                             "type": "ValidationTextBox",
                             "name": "AddSuffixSecond",
                             "caption": "Suffix:",
-                            "width": "150px"
+                            "width": "125px"
                         },
                         {
                             "type": "NumberSpinner",
@@ -419,7 +453,7 @@
                             "minimum": 10,
                             "maximum": 20,
                             "suffix": "px",
-                            "width": "150px"
+                            "width": "130px"
                         }
                     ]
                 },
@@ -427,28 +461,28 @@
                     "type": "RowLayout",
                     "items": [
                         {
-                            "type": "ValidationTextBox",
+                            "type": "SelectIcon",
                             "name": "AddSymbolThird",
                             "caption": "Symbol:",
-                            "width": "75px"
+                            "width": "242px"
                         },
                         {
                             "type": "ValidationTextBox",
                             "name": "AddPrefixThird",
                             "caption": "Prefix:",
-                            "width": "150px"
+                            "width": "125px"
                         },
                         {
                             "type": "SelectVariable",
                             "name": "AddVariableThird",
                             "caption": "Variable:",
-                            "width": "350px"
+                            "width": "263px"
                         },
                         {
                             "type": "ValidationTextBox",
                             "name": "AddSuffixThird",
                             "caption": "Suffix:",
-                            "width": "150px"
+                            "width": "125px"
                         },
                         {
                             "type": "NumberSpinner",
@@ -458,7 +492,7 @@
                             "minimum": 10,
                             "maximum": 20,
                             "suffix": "px",
-                            "width": "150px"
+                            "width": "130px"
                         }
                     ]
                 }
@@ -512,5 +546,11 @@
             ]
         }
     ],
-    "status": []
+    "status": [
+        {
+            "code": 201,
+            "icon": "error",
+            "caption": "At least one selected variable or media object does not exist!"
+        }
+    ]
 }

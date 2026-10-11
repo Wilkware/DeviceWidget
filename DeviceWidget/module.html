@@ -5,17 +5,19 @@
     <meta charset="UTF-8" />
     <style>
         :root {
+            --margin-top: 60px;
+            --margin-side: 20px;
+            --margin-bottom: 15px;
             --tilecolor: transparent;
             --tiletrans: 100%;
             --imagesize: 40%;
-            --statecolor: var(content-color);
+            --statecolor: var(--content-color);
             --statefont: 14px;
             --actionfont: 14px;
             --progressstart: #28CDAB;
             --progressstop: #208A74;
             --progressvalue: 0%;
-            --progressmin: 0;
-            --progressmax: 100;
+            --offlinecolor: #E53935;
             --progressfont: 14px;
             --info1font: 12px;
             --info2font: 12px;
@@ -40,9 +42,9 @@
 
         /* Container mit 2 Spalten */
         #container {
-            margin: 60px 20px 20px 15px;
+            margin: var(--margin-top) var(--margin-side) var(--margin-bottom) var(--margin-side);
             display: flex;
-            height: calc(100% - (60px + 15px));
+            height: calc(100% - var(--margin-top) - var(--margin-bottom));
         }
 
         /* Verhältnis-Klassen */
@@ -106,6 +108,22 @@
             top: 0%;
             z-index: 10;
             /* über alles andere legen */
+        }
+
+        /* Offline-Badge (anstelle des Schalters) */
+        #badge {
+            position: absolute;
+            right: 0%;
+            top: 0%;
+            z-index: 10;
+            padding: 2px 8px;
+            border-radius: 100px;
+            background: var(--offlinecolor);
+            color: #FFFFFF;
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            line-height: 1.4;
         }
 
         #state {
@@ -243,11 +261,15 @@
         }
 
         #info3 {
-            font-size: var(--info2font);
+            font-size: var(--info3font);
         }
 
         .icon {
-            color: var(--accent-color);
+            color: var(--content-color);
+        }
+
+        .icon:not(:empty) {
+            margin-right: 4px;
         }
 
         /* Schalter Checkbox  */
@@ -293,197 +315,14 @@
             background: color-mix(in srgb, var(--accent-color), transparent 0%);
         }
     </style>
-    <script>
-        // default: true
-        var statebar = true;
-
-        function getPercentage(val, min, max) {
-            if (min === 0) {
-                return (val / max) * 100;
-            } else {
-                return ((val - min) + 1) / (max - min + 1) * 100;
-            }
-        }
-
-        function handleInfoParameter(parameter, value, root) {
-            const match = parameter.match(/^info(\d+)(font|icon|text)$/);
-            if (!match) return false; // war kein infoN-Parameter → im switch weitermachen
-
-            const index = match[1]; // "1", "2", "3" ...
-            const type = match[2]; // "font", "icon", "text"
-
-            switch (type) {
-                case 'font':
-                    root.style.setProperty(`--info${index}font`, value + 'px');
-                    break;
-                case 'icon':
-                    document.getElementById(`info${index}icon`).textContent = value;
-                    break;
-                case 'text':
-                    document.getElementById(`info${index}text`).textContent = value;
-                    break;
-            }
-            return true; // wurde verarbeitet
-        }
-
-        function handleMessage(data) {
-            //console.log('Rohdaten empfangen:', data);
-            const decodedData = JSON.parse(data);
-            //console.log('Decodierte Daten:', decodedData);
-            for (const parameter in decodedData) {
-                var root = document.documentElement;
-                console.log('Parameter:', parameter, 'Wert:', decodedData[parameter]);
-                switch (parameter) {
-                    case 'tilecolor':
-                        if (decodedData[parameter]) {
-                            root.style.setProperty('--tilecolor', decodedData[parameter]);
-                        }
-                        break;
-                    case 'tiletrans':
-                        root.style.setProperty('--tiletrans', decodedData[parameter] + '%');
-                        break;
-                    case 'tileratio':
-                        if (decodedData[parameter] !== 0) {
-                            container.className = 'ratio-' + decodedData[parameter];
-                        }
-                        break;
-                    case 'switchstate':
-                        if (decodedData[parameter]) {
-                            if (decodedData[parameter] === 'on') {
-                                document.getElementById('toggle').checked = true;
-                            } else {
-                                document.getElementById('toggle').checked = false;
-                            }
-                        } else {
-                            document.getElementById('switch').style.display = 'none';
-                        }
-                        break;
-                    case 'statefont':
-                        root.style.setProperty('--statefont', decodedData[parameter] + 'px');
-                        break;
-                    case 'statehead':
-                        statehead.textContent = decodedData[parameter];
-                        break;
-                    case 'statetext':
-                        statetext.textContent = decodedData[parameter];
-                        break;
-                    case 'statevalue':
-                        index = decodedData[parameter];
-                        if (typeof imgs !== "undefined") {
-                            if (!imgs[index]) {
-                                index = 0;
-                            }
-                            if (imgs[index] === 'ON') {
-                                document.getElementById('image').src = window.assets.img_on;
-                            }
-                            else if (imgs[index] === 'OFF') {
-                                document.getElementById('image').src = window.assets.img_off;
-                            }
-                            else {
-                                document.getElementById('image').src = window.assets.img_off;
-                            }
-                            root.style.setProperty('--statecolor', cols[index]);
-                            console.log('Idx:', index);
-                            console.log('Imgs:', imgs, 'Length:', Object.keys(imgs).length);
-                            console.log('Bars:', bars, 'Length:', Object.keys(bars).length);
-                            if (Object.keys(bars).length === 0) {
-                                statebar = true;
-                            }
-                            else {
-                                statebar = bars[index] || false;
-                            }
-                            if (statebar === false) {
-                                progressright.textContent = '0 min';
-                                progressleft.textContent = '0%';
-                                root.style.setProperty('--progressvalue', '0%');
-                            }
-                        }
-                        console.log('Progressbar:', statebar);
-                        break;
-                    case 'actionfont':
-                        root.style.setProperty('--actionfont', decodedData[parameter] + 'px');
-                        break;
-                    case 'actionhead':
-                        actionhead.textContent = decodedData[parameter];
-                        break;
-                    case 'actiontext':
-                        actiontext.textContent = decodedData[parameter];
-                        break;
-                    case 'progressfont':
-                        root.style.setProperty('--progressfont', decodedData[parameter] + 'px');
-                        break;
-                    case 'progresshead':
-                        progresshead.textContent = decodedData[parameter];
-                        break;
-                    case 'progresstext':
-                        progressleft.textContent = decodedData[parameter];
-                        if (statebar === false) {
-                            progressleft.textContent = '0%';
-                        }
-                        break;
-                    case 'progressmin':
-                        root.style.setProperty('--progressmin', decodedData[parameter]);
-                        break;
-                    case 'progressmax':
-                        root.style.setProperty('--progressmax', decodedData[parameter]);
-                        break;
-                    case 'progressvalue':
-                        //console.log('Bar:', statebar)
-                        if (statebar === false) {
-                            //console.log('Val:', 0)
-                            root.style.setProperty('--progressvalue', '0%');
-                        } else {
-                            const min = parseFloat(getComputedStyle(root).getPropertyValue('--progressmin'));
-                            const max = parseFloat(getComputedStyle(root).getPropertyValue('--progressmax'));
-                            const val = parseFloat(decodedData[parameter]);
-                            console.log('Min:', min, 'Max:', max, 'Val:', val)
-                            const percentage = getPercentage(val, min, max);
-                            //document.querySelector('.progress').style.width = percentage + '%';
-                            console.log('Percentage:', percentage);
-                            root.style.setProperty('--progressvalue', percentage + '%');
-                        }
-                        break;
-                    case 'progressstart':
-                        root.style.setProperty('--progressstart', decodedData[parameter]);
-                        break;
-                    case 'progressstop':
-                        root.style.setProperty('--progressstop', decodedData[parameter]);
-                        break;
-                    case 'progressterm':
-                        if (decodedData[parameter]) {
-                            if (statebar === false) {
-                                progressright.textContent = '0 min';
-                            }
-                            else {
-                                min = Math.round(decodedData[parameter] / 60);
-                                progressright.textContent = min + ' min';
-                            }
-                        }
-                        break;
-                    default:
-                        if (!handleInfoParameter(parameter, decodedData[parameter], root)) {
-                            console.log('Unbekannter Parameter:', parameter);
-                        }
-                        break;
-                }
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            const checkbox = document.getElementById('toggle');
-            checkbox.addEventListener('change', function () {
-                console.log('Switch-State:', this.checked);
-                requestAction('SwitchState', this.checked ? true : false);
-            });
-        });
-    </script>
+    <script src="/icons.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
     <div id="container" class="ratio-40">
         <div id="left">
-            <img id="image" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
-                alt="Device State Image">
+            <img id="imageon" alt="Device State Image (ON)" style="display: none;">
+            <img id="imageoff" alt="Device State Image (OFF)" style="display: none;">
         </div>
         <div id="right">
             <!-- Oben/Rechts: Schalter -->
@@ -491,6 +330,8 @@
                 <input type="checkbox" id="toggle" class="cbx" />
                 <label for="toggle" class="lbl"></label>
             </div>
+            <!-- Oben/Rechts: Offline-Badge (anstelle des Schalters) -->
+            <div id="badge" style="display: none;">OFFLINE</div>
             <!-- Zeile 1: State -->
             <div id="state" class="row1">
                 <div id="statehead" class="head"></div>
@@ -527,6 +368,301 @@
             </div>
         </div>
     </div>
+    <script>
+        // ── INIT: set root/style variables ───────────────────────────────────
+        const p = new URLSearchParams(location.search);
+        const root = document.documentElement;
+        const m = {
+            margintop: ['--margin-top'],
+            marginside: ['--margin-side'],
+            marginbottom: ['--margin-bottom']
+        };
+        for (const k in m) {
+            const v = p.get(k);
+            if (!v) continue;
+            root.style.setProperty(m[k], `${v}px`);
+        }
+
+        // ── ELEMENTS: ────────────────────────────────────────────────────────
+        const elContainer = document.getElementById('container');
+        const elImageOn = document.getElementById('imageon');
+        const elImageOff = document.getElementById('imageoff');
+        const elSwitch = document.getElementById('switch');
+        const elToggle = document.getElementById('toggle');
+        const elBadge = document.getElementById('badge');
+        const elStateHead = document.getElementById('statehead');
+        const elStateText = document.getElementById('statetext');
+        const elActionHead = document.getElementById('actionhead');
+        const elActionText = document.getElementById('actiontext');
+        const elProgressHead = document.getElementById('progresshead');
+        const elProgressLeft = document.getElementById('progressleft');
+        const elProgressRight = document.getElementById('progressright');
+
+        // ── STATE: ───────────────────────────────────────────────────────────
+        // progress bar visible for the current status (default: true)
+        let statebar = true;
+        // last received progress data, needed to redraw on status changes
+        const progress = { text: null, value: null, min: 0, max: 100, term: null };
+        // status value => {image, color, progress}, image currently to be shown ('ON' or 'OFF')
+        let statemap = {};
+        let stateimage = 'OFF';
+        // switch available (variable with action) and device availability
+        let switchable = false;
+        let offline = false;
+
+        // ── FUNCTION: show switch or offline badge (badge replaces switch) ───
+        function showSwitch() {
+            elSwitch.style.display = (switchable && !offline) ? '' : 'none';
+            elBadge.style.display = offline ? '' : 'none';
+        }
+
+        // ── FUNCTION: set or remove the source of a status image ─────────────
+        function setImage(img, data) {
+            if (data) {
+                img.src = data;
+            } else {
+                img.removeAttribute('src');
+            }
+            showImage();
+        }
+
+        // ── FUNCTION: toggle visibility of the status images ─────────────────
+        // Both images are decoded only once, a status change only toggles the visibility
+        function showImage() {
+            elImageOn.style.display = (stateimage === 'ON' && elImageOn.hasAttribute('src')) ? '' : 'none';
+            elImageOff.style.display = (stateimage !== 'ON' && elImageOff.hasAttribute('src')) ? '' : 'none';
+        }
+
+        // ── FUNCTION: calculate progress percentage from value and range ─────
+        function getPercentage(val, min, max) {
+            if (isNaN(val) || isNaN(min) || isNaN(max) || max <= min) {
+                return 0;
+            }
+            let percentage;
+            if (min > 0 && Number.isInteger(min) && Number.isInteger(max) && Number.isInteger(val)) {
+                // discrete steps (e.g. 1..6): first step already fills 1/n
+                percentage = (val - min + 1) / (max - min + 1) * 100;
+            } else {
+                // continuous range (also 0..n): min = 0 %, max = 100 %
+                percentage = (val - min) / (max - min) * 100;
+            }
+            return Math.min(100, Math.max(0, percentage));
+        }
+
+        // ── FUNCTION: draw progress bar from the last received data ──────────
+        function renderProgress() {
+            if (statebar === false) {
+                elProgressLeft.textContent = '0%';
+                elProgressRight.textContent = '0 min';
+                root.style.setProperty('--progressvalue', '0%');
+                return;
+            }
+            if (progress.text !== null) {
+                elProgressLeft.textContent = progress.text;
+            }
+            if (progress.term !== null && progress.term !== undefined) {
+                elProgressRight.textContent = Math.round(progress.term / 60) + ' min';
+            }
+            if (progress.value !== null) {
+                const percentage = getPercentage(progress.value, progress.min, progress.max);
+                root.style.setProperty('--progressvalue', percentage + '%');
+            }
+        }
+
+        // ── ICON: FontAwesome icon mapping ──────────────────────────────────
+        function getIconType(iconName) {
+            if (!iconName || iconName === 'Transparent') {
+                return { type: 'none', classes: '' };
+            }
+            const raw = String(iconName).trim();
+            const iconMapping = window.iconMapping || {};
+            const mapped = iconMapping[raw] ?? raw;
+            const iconClass = String(mapped).trim();
+            const tokens = iconClass.split(/\s+/).filter(Boolean);
+            // 1) Is there an explicit prefix in the string?
+            if (tokens.some(t => t === 'fak' || t === 'fa-kit')) {
+                return { type: 'kit', classes: (tokens.includes('fa-fw') ? '' : 'fa-fw ') + iconClass };
+            }
+            if (tokens.some(t => t === 'fa-light' || t === 'fal')) {
+                return { type: 'fa-light', classes: (tokens.includes('fa-fw') ? '' : 'fa-fw ') + iconClass };
+            }
+            // 2) No prefix → FA-API: Does it exist as “fal”?
+            const baseName = iconClass.startsWith('fa-') ? iconClass.substring(3) : iconClass;
+            try {
+                if (window.FontAwesome && typeof window.FontAwesome.findIconDefinition === 'function') {
+                    if (window.FontAwesome.findIconDefinition({ prefix: 'fal', iconName: baseName })) {
+                        return { type: 'fa-light', classes: `fa-fw fa-light fa-${baseName}` };
+                    }
+                }
+            } catch (e) {}
+            // 3) Not in fal → Kit icon
+            return { type: 'kit', classes: `fa-fw fa-kit fak fa-${baseName}` };
+        }
+
+        // ── FUNCTION: set info symbol (Symcon icon or legacy character/emoji) ─
+        function setInfoIcon(elIcon, value) {
+            elIcon.replaceChildren();
+            const name = String(value ?? '').trim();
+            if (name === '' || name === 'Transparent') {
+                return;
+            }
+            // icon names are plain ASCII identifiers, anything else (e.g. emoji) is shown as text
+            if (!/^[A-Za-z0-9-]+$/.test(name)) {
+                elIcon.textContent = name;
+                return;
+            }
+            const icon = document.createElement('i');
+            icon.className = getIconType(name).classes;
+            elIcon.appendChild(icon);
+        }
+
+        // ── FUNCTION: handle infoN parameters (font, icon, text) ─────────────
+        function handleInfoParameter(parameter, value) {
+            const match = parameter.match(/^info(\d+)(font|icon|text)$/);
+            // not an infoN parameter -> continue in switch
+            if (!match) return false;
+
+            const index = match[1]; // "1", "2", "3" ...
+            const type = match[2]; // "font", "icon", "text"
+
+            switch (type) {
+                case 'font':
+                    root.style.setProperty(`--info${index}font`, value + 'px');
+                    break;
+                case 'icon':
+                    setInfoIcon(document.getElementById(`info${index}icon`), value);
+                    break;
+                case 'text':
+                    document.getElementById(`info${index}text`).textContent = value;
+                    break;
+            }
+            return true;
+        }
+
+        // ── EVENT: switch toggled -> send action to module ───────────────────
+        elToggle.addEventListener('change', function () {
+            requestAction('SwitchState', this.checked ? true : false);
+        });
+
+        // ── SDK: handleMessage (data transfer) ───────────────────────────────
+        function handleMessage(data) {
+            const decodedData = JSON.parse(data);
+            for (const parameter in decodedData) {
+                switch (parameter) {
+                    case 'tilecolor':
+                        if (decodedData[parameter]) {
+                            root.style.setProperty('--tilecolor', decodedData[parameter]);
+                        }
+                        break;
+                    case 'tiletrans':
+                        root.style.setProperty('--tiletrans', decodedData[parameter] + '%');
+                        break;
+                    case 'tileratio':
+                        if (decodedData[parameter] !== 0) {
+                            elContainer.className = 'ratio-' + decodedData[parameter];
+                        }
+                        break;
+                    case 'offlinecolor':
+                        if (decodedData[parameter]) {
+                            root.style.setProperty('--offlinecolor', decodedData[parameter]);
+                        }
+                        break;
+                    case 'offline':
+                        offline = decodedData[parameter] === true;
+                        showSwitch();
+                        break;
+                    case 'switchstate':
+                        switchable = !!decodedData[parameter];
+                        if (switchable) {
+                            elToggle.checked = decodedData[parameter] === 'on';
+                        }
+                        showSwitch();
+                        break;
+                    case 'statefont':
+                        root.style.setProperty('--statefont', decodedData[parameter] + 'px');
+                        break;
+                    case 'statehead':
+                        elStateHead.textContent = decodedData[parameter];
+                        break;
+                    case 'statetext':
+                        elStateText.textContent = decodedData[parameter];
+                        break;
+                    case 'imageon':
+                        setImage(elImageOn, decodedData[parameter]);
+                        break;
+                    case 'imageoff':
+                        setImage(elImageOff, decodedData[parameter]);
+                        break;
+                    case 'statemap':
+                        statemap = decodedData[parameter] || {};
+                        break;
+                    case 'statevalue': {
+                        const index = decodedData[parameter];
+                        // unknown values fall back to the first entry (value 0)
+                        const entry = statemap[index] || statemap[0] || null;
+                        if (Object.keys(statemap).length === 0) {
+                            statebar = true;
+                        } else {
+                            statebar = entry ? entry.progress !== false : false;
+                        }
+                        stateimage = entry ? entry.image : 'OFF';
+                        showImage();
+                        if (entry && entry.color) {
+                            root.style.setProperty('--statecolor', entry.color);
+                        } else {
+                            root.style.removeProperty('--statecolor');
+                        }
+                        renderProgress();
+                        break;
+                    }
+                    case 'actionfont':
+                        root.style.setProperty('--actionfont', decodedData[parameter] + 'px');
+                        break;
+                    case 'actionhead':
+                        elActionHead.textContent = decodedData[parameter];
+                        break;
+                    case 'actiontext':
+                        elActionText.textContent = decodedData[parameter];
+                        break;
+                    case 'progressfont':
+                        root.style.setProperty('--progressfont', decodedData[parameter] + 'px');
+                        break;
+                    case 'progresshead':
+                        elProgressHead.textContent = decodedData[parameter];
+                        break;
+                    case 'progresstext':
+                        progress.text = decodedData[parameter];
+                        renderProgress();
+                        break;
+                    case 'progressmin':
+                        progress.min = parseFloat(decodedData[parameter]);
+                        break;
+                    case 'progressmax':
+                        progress.max = parseFloat(decodedData[parameter]);
+                        break;
+                    case 'progressvalue':
+                        progress.value = parseFloat(decodedData[parameter]);
+                        renderProgress();
+                        break;
+                    case 'progressstart':
+                        root.style.setProperty('--progressstart', decodedData[parameter]);
+                        break;
+                    case 'progressstop':
+                        root.style.setProperty('--progressstop', decodedData[parameter]);
+                        break;
+                    case 'progressterm':
+                        progress.term = decodedData[parameter];
+                        renderProgress();
+                        break;
+                    default:
+                        if (!handleInfoParameter(parameter, decodedData[parameter])) {
+                            console.warn('Unknown parameter:', parameter);
+                        }
+                        break;
+                }
+            }
+        }
+    </script>
 </body>
 
 </html>
